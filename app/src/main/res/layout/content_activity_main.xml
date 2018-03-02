@@ -8,10 +8,14 @@
     tools:context="com.workaround.ajeesh.ajr_02032018_workaround_location.ActivityMain"
     tools:showIn="@layout/activity_main">
 
+
     <TextView
+        android:id="@+id/mainLocationTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:text="@string/main_text"
+        android:textStyle="bold"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

@@ -1,5 +1,6 @@
 package com.workaround.ajeesh.ajr_02032018_workaround_location;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,8 +9,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import com.workaround.ajeesh.ajr_02032018_workaround_location.Helpers.LogHelper;
+
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 public class ActivityMain extends AppCompatActivity {
+    String logName = "LOC-ACT-MAIN";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +25,13 @@ public class ActivityMain extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        LogHelper.LogThreadId(logName, "Main Activity is created.");
+        String createdTime =
+                (new SimpleDateFormat("HH:mm:ss", Locale.US)).format(System.currentTimeMillis());
+
+        TextView masterPageTextView = findViewById(R.id.mainLocationTextView);
+        masterPageTextView.append("Activity Created time: " + createdTime);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -41,12 +56,23 @@ public class ActivityMain extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        boolean handled = true;
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.menuExit: {
+                finish();
+                break;
+            }
+            default:
+                handled = super.onOptionsItemSelected(item);
+                break;
         }
+        return handled;
+    }
 
-        return super.onOptionsItemSelected(item);
+    private void generateActivityOnClassType(Class<?> activityClass) {
+        LogHelper.LogThreadId(logName, "Activity generated for :" + activityClass);
+        Intent intent = new Intent(this, activityClass);
+        startActivity(intent);
     }
 }
